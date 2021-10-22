@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const path = require('path');
 
 function initialize() {
     function createWindow() {
@@ -7,13 +7,15 @@ function initialize() {
         const { width, height } = screen.getPrimaryDisplay().workAreaSize
 
         const win = new BrowserWindow({
-            width: width,
-            height: height,
+            width: parseInt(width / 1.2),
+            height: parseInt(height / 1.2),
         })
 
         const startUrl = path.join(__dirname, "/build/index.html");
 
         win.loadURL(startUrl)
+
+        //        win.webContents.openDevTools({ mode: 'detach' })
     }
 
     app.whenReady().then(() => {
