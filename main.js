@@ -9,6 +9,8 @@ function initialize() {
         const win = new BrowserWindow({
             width: parseInt(width / 1.2),
             height: parseInt(height / 1.2),
+            frame: false,
+            darkTheme: true
         })
 
         const startUrl = path.join(__dirname, "/build/index.html");
