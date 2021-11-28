@@ -113,9 +113,10 @@ export default function NavigationBar(props: any) {
       ".MuiDrawer-paper": {
         width: menuWidth,
         overflowX: compacted ? 'hidden' : 'visible',
-      }
+        transition: '0.3s',
+      },
+      transition: '0.3s',
     }}>
-      <Divider />
       <List
         sx={{ width: '100%', maxWidth: menuWidth, bgcolor: 'background.paper' }}
         component="nav"
