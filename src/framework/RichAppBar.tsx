@@ -47,11 +47,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function RichAppBar() {
     return (
         <AppBar position='static'>
-            <Toolbar>
-                <IconButton size="large" edge="start" color="inherit" aria-label="Open Menu">
+            <Toolbar variant="dense">
+                <IconButton size="small" edge="start" color="inherit" aria-label="Open Menu">
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div">
+                <Typography variant="subtitle1" noWrap component="div">
                     Process Mining
                 </Typography>
                 <Search>
