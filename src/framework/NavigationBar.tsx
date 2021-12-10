@@ -82,7 +82,7 @@ export default function NavigationBar(props: any) {
     ];
 
     const [opened, setOpened] = useState(menuData.map(v => false));
-    const [selected, setSelected] = useState(0);
+    const [selectedName, setSelectedName] = useState('');
 
     function groupClick(groupId: number) {
         let newOpened = opened.slice();
@@ -90,16 +90,15 @@ export default function NavigationBar(props: any) {
         setOpened(newOpened);
     }
 
-    function menuItemClick(selectionIndex: number) {
-        setSelected(selectionIndex);
-        props.onSelectedChanged(selectionIndex);
+    function menuItemClick(selectedName: string) {
+        setSelectedName(selectedName);
+        props.onSelectedChanged(selectedName);
     }
 
-    let selectionIndex: number = 0;
     const subMenuColor: string = '#777777'
     const mainMenuBackground: string = '#eeeeee'
 
-    const [compacted, setCompacted] = useState(false);
+    const [compacted, setCompacted] = useState(true);
     const subMenuIndent = compacted ? 2 : 4;
     const menuWidth = compacted ? 55 : 280;
 
@@ -139,8 +138,8 @@ export default function NavigationBar(props: any) {
             >
                 {
                     menuData.map((v, i) => (
-                        <React.Fragment>
-                            <ListItemButton onClick={() => groupClick(i)} sx={{ bgcolor: mainMenuBackground }}>
+                        <React.Fragment key={v.Name}>
+                            <ListItemButton key={v.Name} onClick={() => groupClick(i)} sx={{ bgcolor: mainMenuBackground }}>
                                 <ListItemIcon>
                                     {v.Icon}
                                 </ListItemIcon>
@@ -154,9 +153,8 @@ export default function NavigationBar(props: any) {
                                     disablePadding>
                                     {
                                         v.SubItems.map((s: any) => {
-                                            const currentIndex = selectionIndex++;
                                             return (
-                                                <ListItemButton sx={{ pl: subMenuIndent, color: subMenuColor, height: 40 }} selected={selected === currentIndex} onClick={() => menuItemClick(currentIndex)} divider={!compacted}>
+                                                <ListItemButton key={s.Name} sx={{ pl: subMenuIndent, color: subMenuColor, height: 40 }} selected={selectedName === s.Name} onClick={() => menuItemClick(s.Name)} divider={!compacted}>
                                                     <ListItemIcon sx={{ color: subMenuColor }}>
                                                         {s.Icon}
                                                     </ListItemIcon>
@@ -175,9 +173,9 @@ export default function NavigationBar(props: any) {
                 sx={{ width: '100%', maxWidth: menuWidth, bgcolor: 'background.paper', position: 'absolute', bottom: 0 }}
                 component="nav"
                 aria-labelledby="nested-list-subheader">
-                <ListItemButton>
+                <ListItemButton key="DataSelection">
                     {!compacted &&
-                        <FormControl variant="standard" sx={{ mx: 0, my: 1, minWidth: 160, width: '100%', display: 'flex' }}>
+                        <FormControl variant="standard" sx={{ mx: 1, my: 1, minWidth: 160, width: '100%', display: 'flex' }}>
                             <InputLabel id="demo-simple-select-helper-label">Data Source</InputLabel>
                             <Select label="Data Source" sx={{ display: 'flex' }} onChange={dataSourceChange} value={dataSource}>
                                 <MenuItem value="File1">Imported File 1</MenuItem>
@@ -188,12 +186,12 @@ export default function NavigationBar(props: any) {
                             </Select>
                         </FormControl>}
                     {compacted &&
-                        <ListItemIcon sx={{ color: '#339933' }}>
+                        <ListItemIcon sx={{ color: '#339934' }}>
                             <CheckBoxOutlined />
                         </ListItemIcon>
                     }
                 </ListItemButton>
-                <ListItemButton>
+                <ListItemButton key="Settings">
                     <ListItemIcon>
                         <Settings />
                     </ListItemIcon>

@@ -2,28 +2,26 @@ import React, { useState } from 'react';
 import './Framework.css';
 import NavigationBar from './NavigationBar';
 import ProcessDiagnostics from '../pages/ProcessDiagnostics';
+import ProcessDiagnostics1 from '../pages/ProcessDiagnostics1';
 import { Box, AppBar, Toolbar, Typography, } from '@mui/material';
 import RichAppBar from './RichAppBar';
 
 export default function Framework() {
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState('');
 
-    function onSelectedChanged(selectedIndex: number) {
-        console.log("selected " + selectedIndex);
-        setCurrentPage(selectedIndex);
+    function onSelectedChanged(selectedName: string) {
+        console.log("selected " + selectedName);
+        setCurrentPage(selectedName);
     }
 
-    const pages = [
-        <ProcessDiagnostics />,
-        <ProcessDiagnostics />,
-        <ProcessDiagnostics />,
-        <ProcessDiagnostics />,
-        <ProcessDiagnostics />,
-    ]
+    const pages : { [key:string]: any } = {
+        "": <ProcessDiagnostics />,
+        "Process Diagnostics": <ProcessDiagnostics />,
+    }
 
     return (
         <div id="Framework">
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', height: '100%' }}>
                 <NavigationBar onSelectedChanged={onSelectedChanged} />
                 <Box component="main" sx={{ flexGrow: 1 }}>
                     {pages[currentPage]}
