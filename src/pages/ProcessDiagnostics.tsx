@@ -14,8 +14,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Button } from '@mui/material';
-import { Storage, Biotech, Send } from '@mui/icons-material';
-import { ListItemAvatar, Avatar, Chip, Paper } from '@mui/material';
+import { Storage, Biotech, Send, FolderOutlined, NavigateNext } from '@mui/icons-material';
+import { ListItemAvatar, Avatar, Chip, Paper, Breadcrumbs } from '@mui/material';
 import { Tabs, Tab } from '@mui/material';
 
 import * as api from '../common/ServerAPIs';
@@ -39,7 +39,11 @@ export default function ProcessDiagnostics(props: any) {
     async function loadProcessDefinitions() {
         setData([
             { id: 1, name: "Process Definition 1", description: "This is the process definition 1" },
-            { id: 2, name: "Process Definition 2", description: "This is the process definition 2" }
+            { id: 2, name: "Process Definition 2", description: "This is the process definition 2" },
+            { id: 3, name: "Job template 3", description: "This is the process definition 3" },
+            { id: 4, name: "Task plan 4", description: "This is the process definition 4" },
+            { id: 5, name: "Procurement process 5", description: "This is the process definition 5" },
+            { id: 6, name: "Financial process 6", description: "This is the process definition 6" },
         ]);
         return;
         var processDefinitionsUri = api.processDefinitions();
@@ -73,7 +77,7 @@ export default function ProcessDiagnostics(props: any) {
         setKnowledgeBase(event.target.value);
     };
 
-    const listMaxWidth: number = 290;
+    const listMaxWidth: number = 250;
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
     }));
@@ -108,7 +112,7 @@ export default function ProcessDiagnostics(props: any) {
                         <FormControl variant="standard" sx={{ minWidth: 160, width: '100%', display: 'flex' }}>
                             <InputLabel id="demo-simple-select-helper-label">KnowledgeBase</InputLabel>
                             <Select label="Knowledge Base" sx={{ display: 'flex' }} onChange={knowledgeBaseChange} value={knowledgeBase}>
-                                <MenuItem value="Hpc">Hpc Pack Job Analysis</MenuItem>
+                                <MenuItem value="Hpc">Hpc Job Analysis</MenuItem>
                                 <MenuItem value="Financial">Finanicial Processes</MenuItem>
                                 <MenuItem value="Procurement">Procurement Process</MenuItem>
                                 <MenuItem value="Production">Production Process</MenuItem>
@@ -124,12 +128,12 @@ export default function ProcessDiagnostics(props: any) {
                 {
                     data.map((v, i) => {
                         return (
-                            <ListItemButton key={v.id} onClick={() => menuItemClick(i)} selected={selected === i}>
-                                <ListItemAvatar>
-                                    <Storage />
-                                </ListItemAvatar>
-                                <ListItemText primary={v.name} secondary={v.description} />
-                                {/* <ListItemText primary={v.name} /> */}
+                            <ListItemButton dense key={v.id} onClick={() => menuItemClick(i)} selected={selected === i}>
+                                <ListItemIcon>
+                                    <FolderOutlined />
+                                </ListItemIcon>
+                                {/*                                 <ListItemText primary={v.name} secondary={v.description} /> */}
+                                <ListItemText primary={v.name} />
                             </ListItemButton>
                         );
                     })
@@ -139,27 +143,25 @@ export default function ProcessDiagnostics(props: any) {
             {/* <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', p: 0}}> */}
             <Stack direction="column" alignItems="stretch" justifyContent="flex-start"
                 spacing={1} p={1} sx={{ flexGrow: 1, bgcolor: 'grey.100' }}>
-                <Stack direction="row" alignItems="flex-end" justifyContent="space-between">
-                    <Stack direction="row" alignItems="center" spacing={1} p={1}>
-                        <Avatar sx={{ color: 'primary.main' }}>{selected}</Avatar>
-                        <Box sx={{ color: 'primary.main' }}>
-                            <Typography variant="h6">Selected {selected} definition. </Typography>
-                            <Typography variant="body2">This is the description of selected {selected} definition. </Typography>
-                        </Box>
-                    </Stack>
-                    <Stack direction="row" alignItems="flex-end" justifyContent="flex-start" spacing={1}>
-                        <Button variant="text" size="small" startIcon={<Biotech />}>
-                            Laboratory
-                        </Button>
-                        <Divider variant="middle" orientation="vertical" flexItem />
-                        <Button variant="text" size="small" endIcon={<Send />}>
-                            Send Report
-                        </Button>
-                    </Stack>
-                </Stack>
                 {/*                 <Grid container sx={{ flexGrow: 1, p: 0, m: 0}}>
                     <Grid item sm={4}> */}
-                <Paper elevation={1}
+                <Stack direction="row" alignItems="center" justifyContent="space-between">
+                    <Breadcrumbs
+                        separator={<NavigateNext fontSize="small" />}
+                        aria-label="breadcrumb"
+                    >
+                        <Typography key={1} color="text.primary">
+                            Imported File 1
+                        </Typography>
+                        <Typography key={2} color="text.primary">
+                            Hpc Job Analysis
+                        </Typography>
+                        <Typography key={3} color="text.primary">
+                            Process Definition 1
+                        </Typography>
+                    </Breadcrumbs>
+                    <Stack direction="row" alignItems="center" justifyContent="flex-start" spacing={1}>
+                <Paper elevation={0}
                     component="ul"
                     sx={{
                         display: 'flex',
@@ -179,6 +181,15 @@ export default function ProcessDiagnostics(props: any) {
                         <Chip variant="filled" color="success" label="compliant" size="small" onClick={(c) => { }} />
                     </ListItem>
                 </Paper>
+                        <Button variant="text" size="small" startIcon={<Biotech />}>
+                            Laboratory
+                        </Button>
+                        <Divider variant="middle" orientation="vertical" flexItem />
+                        <Button variant="text" size="small" endIcon={<Send />}>
+                            Send Report
+                        </Button>
+                    </Stack>
+                </Stack>
                 <Paper elevation={1} sx={{ flexGrow: 1, p: 1, display: 'flex' }}>
                     <Stack direction="column" sx={{ flexGrow: 1 }}>
                         <Tabs value={selectedTab} onChange={(e, v) => { setSelectedTab(v) }} aria-label="basic tabs example">
@@ -190,7 +201,7 @@ export default function ProcessDiagnostics(props: any) {
                         <TabPanel index={1} value={selectedTab} />
                         <TabPanel index={2} value={selectedTab} />
                         <TabPanel index={0} value={selectedTab}>
-                            <Stack direction='row' sx={{ height: '100%' }} divider={<Divider orientation="vertical" />}>
+                            <Stack direction='row-reverse' sx={{ height: '100%' }} divider={<Divider orientation="vertical" />}>
                                 <DataTable />
                                 <ProcessVariantsChart />
                             </Stack>

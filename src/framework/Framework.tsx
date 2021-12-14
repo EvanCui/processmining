@@ -1,32 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Framework.css';
 import NavigationBar from './NavigationBar';
 import ProcessDiagnostics from '../pages/ProcessDiagnostics';
-import ProcessDiagnostics1 from '../pages/ProcessDiagnostics1';
-import { Box, AppBar, Toolbar, Typography, } from '@mui/material';
-import RichAppBar from './RichAppBar';
+import useCustomTheme from '../common/CustomTheme';
+import { Box, Stack, Typography } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export default function Framework() {
-    const [currentPage, setCurrentPage] = useState('');
+    const pages = [{
+        path: "/diagnostics",
+        page: <ProcessDiagnostics />
+    }, {
+        path: "*",
+        page: <Typography variant="h2">Page not found.</Typography>,
 
-    function onSelectedChanged(selectedName: string) {
-        console.log("selected " + selectedName);
-        setCurrentPage(selectedName);
-    }
+    }];
 
-    const pages : { [key:string]: any } = {
-        "": <ProcessDiagnostics />,
-        "Process Diagnostics": <ProcessDiagnostics />,
-    }
+    const theme = useCustomTheme({ railMode: 'light' });
 
     return (
-        <div id="Framework">
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch', height: '100%' }}>
-                <NavigationBar onSelectedChanged={onSelectedChanged} />
-                <Box component="main" sx={{ flexGrow: 1 }}>
-                    {pages[currentPage]}
-                </Box>
-            </Box>
-        </div>
+        <BrowserRouter>
+            <ThemeProvider theme={theme}>
+                <div id="Framework">
+                    <Stack direction="row" alignItems="stretch" sx={{ height: '100%' }}>
+                        <NavigationBar />
+                        <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'red' }}>
+                            <Routes>
+                                {
+                                    pages.map((p) => (<Route key={p.path} path={p.path} element={p.page} />))
+                                }
+                            </Routes>
+                        </Box>
+                    </Stack>
+                </div>
+            </ThemeProvider>
+        </BrowserRouter>
     );
 }
