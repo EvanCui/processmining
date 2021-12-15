@@ -40,8 +40,9 @@ export default function useCustomTheme(options: CustomThemeOptions = { railMode:
             railColor: {
                 //light: green[400],
                 //light: lightBlue[400],
-                light: grey[50],
-                main: grey[500],
+                light: '#fff',
+                //light: grey[50],
+                main: grey[400],
             },
             railIconColorSeries: [{
                 main: blue[500],

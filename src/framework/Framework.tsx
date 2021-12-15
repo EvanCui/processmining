@@ -5,7 +5,7 @@ import ProcessDiagnostics from '../pages/ProcessDiagnostics';
 import useCustomTheme from '../common/CustomTheme';
 import { Box, Stack, Typography } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
 
 export default function Framework() {
     const pages = [{
@@ -17,7 +17,7 @@ export default function Framework() {
 
     }];
 
-    const theme = useCustomTheme({ railMode: 'light' });
+    const theme = useCustomTheme({ railMode: 'dark' });
 
     return (
         <BrowserRouter>
@@ -25,7 +25,7 @@ export default function Framework() {
                 <div id="Framework">
                     <Stack direction="row" alignItems="stretch" sx={{ height: '100%' }}>
                         <NavigationBar />
-                        <Box component="main" sx={{ flexGrow: 1, backgroundColor: 'red' }}>
+                        <Box component="main" sx={{ flexGrow: 1 }}>
                             <Routes>
                                 {
                                     pages.map((p) => (<Route key={p.path} path={p.path} element={p.page} />))

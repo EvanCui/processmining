@@ -73,7 +73,8 @@ export default function MultiLevelList(props: any) {
                             }),
                         };
 
-                        const iconColor = getNextColor(theme);
+                        //const iconColor = getNextColor(theme);
+                        const iconColor = isSelected ? selectedColor : colorStyle.color;
 
                         return (<React.Fragment key={v.Name}>
                             <ListItemButton

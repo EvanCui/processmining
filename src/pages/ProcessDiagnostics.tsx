@@ -26,58 +26,13 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { styled } from '@mui/material/styles';
+import ProcessDefinitionSelector from '../common/ProcessDefinitionSelector';
+import { maxWidth } from '@mui/system';
 
 export default function ProcessDiagnostics(props: any) {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-    const [data, setData] = useState([] as any[]);
-
-    useEffect(() => {
-        loadProcessDefinitions()
-    }, [])
-
-    async function loadProcessDefinitions() {
-        setData([
-            { id: 1, name: "Process Definition 1", description: "This is the process definition 1" },
-            { id: 2, name: "Process Definition 2", description: "This is the process definition 2" },
-            { id: 3, name: "Job template 3", description: "This is the process definition 3" },
-            { id: 4, name: "Task plan 4", description: "This is the process definition 4" },
-            { id: 5, name: "Procurement process 5", description: "This is the process definition 5" },
-            { id: 6, name: "Financial process 6", description: "This is the process definition 6" },
-        ]);
-        return;
-        var processDefinitionsUri = api.processDefinitions();
-        console.log("fetching " + processDefinitionsUri);
-        let response = await fetch(processDefinitionsUri);
-        console.log("loaded " + response);
-        if (response.ok) {
-            let jsonData = await response.json();
-            // setData(JSON.parse(jsonData));
-            setData([
-                { name: "Process Definition 1", description: "This is the process definition 1" },
-                { name: "Process Definition 2", description: "This is the process definition 2" }
-            ]);
-        }
-        else {
-            setError(await response.text());
-        }
-
-        setLoading(false);
-    }
-
-    const [selected, setSelected] = useState(0);
-
-    function menuItemClick(selectionIndex: number) {
-        setSelected(selectionIndex);
-    }
-
-    const [knowledgeBase, setKnowledgeBase] = useState('Hpc');
-
-    const knowledgeBaseChange = (event: SelectChangeEvent) => {
-        setKnowledgeBase(event.target.value);
-    };
-
     const listMaxWidth: number = 250;
+    const [selectedProcessDefinitionId, setSelectedProcessDefinitionId] = useState();
+
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
     }));
@@ -103,42 +58,7 @@ export default function ProcessDiagnostics(props: any) {
 
     return (
         <Stack direction="row" sx={{ height: '100%' }}>
-            <List
-                sx={{ minWidth: listMaxWidth, maxWidth: listMaxWidth, height: '100%', p: 0 }}
-                component="nav"
-                aria-labelledby="nested-list-subheader"
-                subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        <FormControl variant="standard" sx={{ minWidth: 160, width: '100%', display: 'flex' }}>
-                            <InputLabel id="demo-simple-select-helper-label">KnowledgeBase</InputLabel>
-                            <Select label="Knowledge Base" sx={{ display: 'flex' }} onChange={knowledgeBaseChange} value={knowledgeBase}>
-                                <MenuItem value="Hpc">Hpc Job Analysis</MenuItem>
-                                <MenuItem value="Financial">Finanicial Processes</MenuItem>
-                                <MenuItem value="Procurement">Procurement Process</MenuItem>
-                                <MenuItem value="Production">Production Process</MenuItem>
-                                <MenuItem value="Logistics">Logistics Process</MenuItem>
-                                <MenuItem value="SAP">SAP System</MenuItem>
-                                <MenuItem value="Kingdee">Kingdee System</MenuItem>
-                                <MenuItem value="Yonyou">Yonyou System</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </ListSubheader>
-                }
-            >
-                {
-                    data.map((v, i) => {
-                        return (
-                            <ListItemButton dense key={v.id} onClick={() => menuItemClick(i)} selected={selected === i}>
-                                <ListItemIcon>
-                                    <FolderOutlined />
-                                </ListItemIcon>
-                                {/*                                 <ListItemText primary={v.name} secondary={v.description} /> */}
-                                <ListItemText primary={v.name} />
-                            </ListItemButton>
-                        );
-                    })
-                }
-            </List >
+            <ProcessDefinitionSelector width={listMaxWidth} selecteddefinition={selectedProcessDefinitionId} setselecteddefinition={setSelectedProcessDefinitionId} />
             <Divider orientation="vertical" flexItem />
             {/* <Box sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', p: 0}}> */}
             <Stack direction="column" alignItems="stretch" justifyContent="flex-start"
