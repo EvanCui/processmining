@@ -99,18 +99,19 @@ export function ProcessVariantsChart(props: any) {
                             edgeLength: 300
                         },
                         symbol: 'rect',
-                        symbolSize: 50,
+                        symbolSize: [100, 50],
                         roam: true,
                         label: {
                             show: true,
                             position: 'inside',
                         },
                         edgeSymbol: ['circle', 'arrow'],
-                        edgeSymbolSize: [4, 10],
+                        edgeSymbolSize: [10, 15],
                         edgeLabel: {
+                            show: false,
                             fontSize: 20
                         },
-                        selectedMode: 'multiple',
+                        selectedMode: 'single',
                         select: {
                             itemStyle: {
                                 borderWidth: 0,
@@ -225,45 +226,107 @@ export function ProcessVariantsChart(props: any) {
                         },
                         categories: [
                             {
-                                name: "variant 1",
+                                name: "happy path",
                                 symbol: 'roundRect'
                             },
                             {
-                                name: "variant 2",
+                                name: "failed job",
+                                symbol: 'rect',
+                                itemStyle: {
+                                    color: '#a70d46'
+                                }
+                            },
+                            {
+                                name: "canceled job",
+                                symbol: 'rect',
+                                itemStyle: {
+                                    color: '#bc7516'
+                                }
+                            },
+                            {
+                                name: "user actions",
+                                symbol: 'rect',
+                                itemStyle: {
+                                    color: '#0d7ea6'
+                                }
                             },
                         ],
                         data: [
                             {
-                                name: 'Node 1',
-                                x: 300,
+                                name: 'Create Job',
+                                x: 500,
                                 y: 300,
                                 category: 0,
                                 fixed: true,
                             },
                             {
-                                name: 'Node 2',
-                                x: 800,
-                                y: 300,
+                                name: 'Validate Job',
+                                x: 500,
+                                y: 400,
                                 category: 0,
                                 fixed: true,
                             },
                             {
-                                name: 'Node 3',
-                                x: 550,
-                                y: 100,
-                                category: 0,
-                            },
-                            {
-                                name: 'Node 4',
-                                x: 550,
+                                name: 'Queue Job',
+                                x: 500,
                                 y: 500,
-                                category: 1,
+                                category: 0,
+                                fixed: true,
                             },
                             {
-                                name: 'Node 5',
-                                x: 1000,
-                                y: 300,
+                                name: 'Start Job',
+                                x: 500,
+                                y: 600,
+                                category: 0,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Run Job',
+                                x: 500,
+                                y: 700,
+                                category: 0,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Finished Job',
+                                x: 500,
+                                y: 800,
+                                category: 0,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Failed Job',
+                                x: 700,
+                                y: 600,
                                 category: 1,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Canceled Job',
+                                x: 700,
+                                y: 800,
+                                category: 2,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Requeue Job',
+                                x: 700,
+                                y: 400,
+                                category: 3,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Cancel Job',
+                                x: 700,
+                                y: 700,
+                                category: 2,
+                                fixed: true,
+                            },
+                            {
+                                name: 'Change Job',
+                                x: 700,
+                                y: 500,
+                                category: 3,
                                 fixed: true,
                             }
                         ],
@@ -271,70 +334,141 @@ export function ProcessVariantsChart(props: any) {
                         links: [
                             {
                                 source: 0,
-                                target: 4,
-                                lineStyle: {
-                                    curveness: 0.4
-                                },
-                            },
-                            {
-                                source: 0,
-                                target: 4,
-                                lineStyle: {
-                                    curveness: 0.3
-                                }
+                                target: 1,
                             },
                             {
                                 source: 1,
+                                target: 2,
+                            },
+                            {
+                                source: 2,
+                                target: 3,
+                            },
+                            {
+                                source: 3,
                                 target: 4,
-                                symbolSize: [5, 20],
-                                label: {
-                                    show: true
-                                },
+                            },
+                            {
+                                source: 4,
+                                target: 5,
+                            },
+                            {
+                                source: 'Validate Job',
+                                target: 'Failed Job',
                                 lineStyle: {
-                                    width: 5,
+                                    width: 3,
                                     curveness: 0.2
                                 }
                             },
                             {
-                                source: 0,
-                                target: 1,
-                                symbolSize: [5, 20],
-                                label: {
-                                    show: true
-                                },
+                                source: 'Run Job',
+                                target: 'Failed Job',
                                 lineStyle: {
-                                    width: 5,
+                                    width: 3,
+                                    curveness: -0.2
+                                }
+                            },
+                            {
+                                source: 'Failed Job',
+                                target: 'Requeue Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: -0.3
+                                }
+                            },
+                            {
+                                source: 'Requeue Job',
+                                target: 'Validate Job',
+                                lineStyle: {
+                                    width: 3,
+                                    curveness: 0
+                                }
+                            },
+                            {
+                                source: 'Start Job',
+                                target: 'Queue Job',
+                                lineStyle: {
+                                    width: 1,
                                     curveness: 0.2
                                 }
                             },
                             {
-                                source: 'Node 2',
-                                target: 'Node 1',
+                                source: 'Run Job',
+                                target: 'Queue Job',
                                 lineStyle: {
+                                    width: 1,
+                                    curveness: 0.4
+                                }
+                            },
+                            {
+                                source: 'Queue Job',
+                                target: 'Cancel Job',
+                                lineStyle: {
+                                    width: 2,
                                     curveness: 0.2
                                 }
                             },
                             {
-                                source: 'Node 1',
-                                target: 'Node 3',
+                                source: 'Run Job',
+                                target: 'Cancel Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0
+                                }
                             },
                             {
-                                source: 'Node 2',
-                                target: 'Node 3'
+                                source: 'Cancel Job',
+                                target: 'Canceled Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0
+                                }
                             },
                             {
-                                source: 'Node 2',
-                                target: 'Node 4'
+                                source: 'Canceled Job',
+                                target: 'Requeue Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: -0.3
+                                }
                             },
                             {
-                                source: 'Node 1',
-                                target: 'Node 4'
-                            }
+                                source: 'Queue Job',
+                                target: 'Change Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0.2
+                                }
+                            },
+                            {
+                                source: 'Change Job',
+                                target: 'Queue Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0.2
+                                }
+                            },
+                            {
+                                source: 'Run Job',
+                                target: 'Change Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0.1
+                                }
+                            },
+                            {
+                                source: 'Change Job',
+                                target: 'Run Job',
+                                lineStyle: {
+                                    width: 2,
+                                    curveness: 0.1
+                                }
+                            },
                         ],
                         lineStyle: {
                             color: 'target',
                             opacity: 0.9,
-                            width: 2,
+                            width: 4,
                             curveness: 0
                         }
                     }

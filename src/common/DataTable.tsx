@@ -92,12 +92,12 @@ export function DataTable() {
     ]
 
     const rows = [
-        createData('process variant 1', 1, 'abcdefabcdefabcdefabcdefabcdefabcdef', 28),
-        createData('process variant 2', 2, 'abcdefabcdefabcdefabcdefabcdefabcdef', 25),
-        createData('', 3, 'abcdefabcdefabcdefabcdefabcdefabcdefaaaaaaaaaaaaaaa', 3),
-        createData('process variant 4', 4, 'abcdefabcdefabcdefabcdefabcdefabcdef', 2),
-        createData('', 5, 'abcdefabcdefabcdefabcdefabcdefabcdef', 1),
-        createData('process variant 6', 6, 'abcdefabcdefabcdefabcdefabcdefabcdef', 1),
+        createData('happy path', 1, 'abcdefabcdefabcdefabcdefabcdefabcdef', 28),
+        createData('failed job', 2, 'abcdefabcdefabcdefabcdefabcdefabcdef', 25),
+        createData('canceled job', 3, 'abcdefabcdefabcdefabcdefabcdefabcdefaaaaaaaaaaaaaaa', 3),
+        createData('changed job', 4, 'abcdefabcdefabcdefabcdefabcdefabcdef', 2),
+        createData('back to queue', 5, 'abcdefabcdefabcdefabcdefabcdefabcdef', 1),
+        createData('requeued job', 6, 'abcdefabcdefabcdefabcdefabcdefabcdef', 1),
     ]
 
     interface EnhancedTableProps {
