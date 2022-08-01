@@ -3,9 +3,10 @@ import './Framework.css';
 import NavigationBar from './NavigationBar';
 import ProcessDiagnostics from '../pages/ProcessDiagnostics';
 import useCustomTheme from '../common/CustomTheme';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, HashRouter, Routes, Route } from 'react-router-dom';
+import UnderDevelopment from '../pages/UnderDevelopment';
 
 export default function Framework() {
     const pages = [{
@@ -13,8 +14,7 @@ export default function Framework() {
         page: <ProcessDiagnostics />
     }, {
         path: "*",
-        page: <Typography variant="h2">Page not found.</Typography>,
-
+        page: <ProcessDiagnostics />
     }];
 
     const theme = useCustomTheme({ railMode: 'dark' });

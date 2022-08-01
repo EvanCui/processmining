@@ -87,7 +87,7 @@ export default function NavigationBar(props: any) {
     ];
 
     // rail states
-    const [selectedName, setSelectedName] = useState('');
+    const [selectedName, setSelectedName] = useState('Process Diagnostics');
 
     interface RailExpansionState {
         railWidth: number;

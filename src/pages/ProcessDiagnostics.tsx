@@ -32,6 +32,7 @@ import { maxWidth } from '@mui/system';
 export default function ProcessDiagnostics(props: any) {
     const listMaxWidth: number = 250;
     const [selectedProcessDefinitionId, setSelectedProcessDefinitionId] = useState();
+    const [selectedVariants, setSelectedVariants] = useState(['happy path']);
 
     const ListItem = styled('li')(({ theme }) => ({
         margin: theme.spacing(0.5),
@@ -122,8 +123,8 @@ export default function ProcessDiagnostics(props: any) {
                         <TabPanel index={2} value={selectedTab} />
                         <TabPanel index={0} value={selectedTab}>
                             <Stack direction='row-reverse' sx={{ height: '100%' }} divider={<Divider orientation="vertical" />}>
-                                <DataTable />
-                                <ProcessVariantsChart />
+                                <DataTable selectedVariants={selectedVariants} setSelectedVariants={setSelectedVariants} />
+                                <ProcessVariantsChart selectedVariants={selectedVariants} />
                             </Stack>
                         </TabPanel>
                     </Stack>
